@@ -13,7 +13,7 @@ Prove that for any integer $$a$$ and any prime number $$p$$,
 \\[ a^p \equiv a \pmod p \\]
 
 ### A:
-The question above is a brief restatement of Fermat's Little Theorem, a famous result in number theory. Not to be confused with Fermat's Last Theorem, this little theorem is actually much easier to prove, as can be seen by the plethora of [proofs](https://en.wikipedia.org/wiki/Fermat%27s_little_theorem) found on Wikipedia, etc. One interpretation of this theorem is that the number $$a^p - a$$ is always a multiple of $$p$$, a fact that is not inherently obvious.
+The question above is a brief restatement of Fermat's Little Theorem, a famous result in number theory. Not to be confused with Fermat's Last Theorem, this little theorem is actually much easier to prove, as can be seen by the plethora of [proofs](https://en.wikipedia.org/wiki/Proofs_of_Fermat's_little_theorem) found on Wikipedia, etc. One interpretation of this theorem is that the number $$a^p - a$$ is always a multiple of $$p$$, a fact that is not inherently obvious.
 
 Our approach to proving the theorem is through the use of a fact known commonly as the "Freshman Binomial Theorem," which states that for all prime $$p$$,
 
