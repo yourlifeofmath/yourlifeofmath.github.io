@@ -29,7 +29,7 @@ Each binomial coefficient can be written
 
 \\[ {p \choose k} = \frac{p \cdot (p-1) \cdot (p-2) \cdots (p - k + 1)}{k!} \\]
 
-and since $$p$$ is prime and $$k < p$$, none of the factors in the denominator will cancel out the $$p$$ in the numator, which implies that each of the binomial coefficients is divisible by $$p$$, which means that $$\pmod p$$ we can safely ignore all the middle terms, and we are left with the original statement of the Freshman Binomial Theorem:
+and since $$p$$ is prime and $$k < p$$, none of the factors in the denominator will cancel out the $$p$$ in the numerator, which implies that each of the binomial coefficients is divisible by $$p$$, which means that $$\pmod p$$ we can safely ignore all the middle terms, and we are left with the original statement of the Freshman Binomial Theorem:
 
 \\[ {(x + y)}^p \equiv x^p + y^p \pmod p \\]
 
