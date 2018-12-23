@@ -1,7 +1,14 @@
 ---
 layout: default
 ---
-<h1>{{ page.title }}</h1>
-<p>{{ page.date | date_to_string }} - {{ page.author }}</p>
+<div class="post-header">
+    <div>{{ page.title }}</div>
+    <div class="meta">
+        <div>{{ page.date | date_to_string }}</div>
+        <div>{{ page.author }}</div>
+    </div>
+</div>
 
+<div class="post-content">
 {{ content }}
+</div>
