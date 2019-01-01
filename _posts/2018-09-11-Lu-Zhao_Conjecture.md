@@ -21,7 +21,7 @@ We sought to prove this, and in hindsight I guess it wasn't too hard. But it was
 Anyways, the proof:
 
 ### Lemma:
-If you know if the bad apples is heavier or lighter, you can find the bad apple from 3^N apples for N weighings.
+If you know if the bad apples is heavier or lighter, you can find the bad apple from $$3^N$$ apples for $$N$$ weighings.
 
 ### Proof:
 In the base case, you have three apples. WLOG assume two heavy (by pidgeonhole you double up on either heavy or light). You weigh two heavy against each other, if they balance it is the omitted, if they tip it is the heavier one (because you only have potentially heavy bad apples).
@@ -33,7 +33,7 @@ If you have sufficient good apples, then you can find a bad apple out of $$\frac
 
 ### Proof:
 Base case: you have $$N = 1$$. So you have $$2$$ total apples, and you have your reference apples. Just do it.
-Now, assuming you can do $$\frac{3^k + 1}{2}$$ in $$k$$ weighings, we show that the $$k+1$$ case holds. With $$\frac{3^{k+1} +1}{2}$$ apples, and we set aside $$\frac{3^k + 1}{2}$$ of the apples, and weigh the other $$3^k$$ against reference. We are left with two cases: when 3^k tips against the good apples, we know their heavy/lightness, and we use the above lemma, and when the $$3^k$$ apples balance against the good apples, then we have $$\frac{3^k + 1}{2}$$ in $$k$$ weighings, with plenty of reference apples, which is the $$k$$-case.
+Now, assuming you can do $$\frac{3^k + 1}{2}$$ in $$k$$ weighings, we show that the $$k+1$$ case holds. With $$\frac{3^{k+1} +1}{2}$$ apples, and we set aside $$\frac{3^k + 1}{2}$$ of the apples, and weigh the other $$3^k$$ against reference. We are left with two cases: when $$3^k$$ tips against the good apples, we know their heavy/lightness, and we use the above lemma, and when the $$3^k$$ apples balance against the good apples, then we have $$\frac{3^k + 1}{2}$$ in $$k$$ weighings, with plenty of reference apples, which is the $$k$$-case.
 
 Now, we can finally move on to the main part of the proof. Assuming the k-case holds, and using the $$13$$ apple case as the base case, we try to prove the $$k+1$$ case.
 
