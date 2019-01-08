@@ -7,4 +7,4 @@ math: true
 ---
 
 ### Q:
-Prove that the uncertainty in measurement of a particle's position $$\sigma_x$$ and the uncertainty in its momentum  $$\sigma_p$$ must satisfy the lower bound $$\sigma_x\sigma_p \ge \frac{\hbar}{2} $$ where $$\hbar$$ is the reduced Planck's constant 
+Show that the uncertainty in measurement of a particle's position $$\sigma_x$$ and the uncertainty in its momentum  $$\sigma_p$$ are such that $$\sigma_x\sigma_p \ge \frac{\hbar}{2} $$ where $$\hbar$$ is the reduced Planck's constant 
