@@ -30,11 +30,17 @@ Since the bounding polygon contains points of both colors, it must contain a pai
 
 #### Lemma 2 (Infinite Rotations Lemma)
 
-There exists a rotation of the $$2N$$ points such that no two points (of either color) lie on the same vertical line.
+There exists a rotation of the plane such that no two points (of either color) lie on the same vertical line.
 
 #### Proof Lemma 2
 
-There are only finitely many pairs points (and thus connecting line segments) and infinitely many rotations. $$\square$$
+There are only finitely many pairs of points (and thus only finitely many possible connecting line segments), but there are infinitely many rotations of the plane. 
+
+More rigorously, fix the plane and consider the set of all pairs of points. For each possible pair of points, compute the angle the line through the two points makes with with the $$x$$-axis. The resulting set of angles is finite, so there exists some angle $$\theta$$ such that for any angle $$\phi$$ in our set of angles,
+
+\\[ \phi + \theta \not \equiv \frac{\pi}{2} \pmod{\pi} \\]
+
+Rotate the plane by angle $$\theta$$. $$\square$$
 
 #### Lemma 3 (Planar Splitting Lemma)
 
@@ -42,7 +48,7 @@ There exists a line that splits the $$2N$$ points such that there are exactly $$
 
 #### Proof Lemma 3
 
-Suppose that the convex bounding polygon of the $$2N$$ is uniformly colored (WLOG) blue.
+Suppose that the convex bounding polygon of the $$2N$$ points is uniformly colored (WLOG) blue.
 
 By Lemma 2, we can find a rotation of the plane such that no two points lie on the same vertical line. Consider a vertical line that starts at the leftmost point and translates horizontally to the right. Define the function $$f(i)$$ to be the number of blue points left of the line minus the number of red points left of the line when the line is between the $$i$$th and $$i+1$$th points. This function is well defined, since no two points lie on the same vertical line.
 
@@ -75,4 +81,4 @@ This gives us the following algorithm:
 3. Otherwise, take a pair of intersecting line segments (say AB and CD), connect AC and BD, erasing the previous connections.
 4. Go to Step 2.
 
-By the above observation on swapping connections, we note that the total sum of the lengths of all of the connecting line segments decreases when we execute Step 3. But there are only finitely many connection configurations, so this sum cannot decrease forever; our algorithm must terminate. When the algorithm has terminated, we are left with a valid connecting configuration. $$\square$$
+By the above observation on swapping connections, we note that the total sum of the lengths of all of the connecting line segments decreases when we execute Step 3. But there are only finitely many connection configurations, so this sum cannot decrease forever, which means our algorithm must terminate. When the algorithm has terminated, we are left with a valid connecting configuration. $$\square$$
