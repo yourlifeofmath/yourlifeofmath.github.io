@@ -78,7 +78,7 @@ This gives us the following algorithm:
 
 1. For any configuration of points, arbitrarily connect each red point to a unique blue point. 
 2. If no connecting segments intersect, we are done.
-3. Otherwise, take a pair of intersecting line segments (say AB and CD), connect AC and BD, erasing the previous connections.
+3. Otherwise, take a pair of intersecting line segments (say, $$AB$$ and $$CD$$), connect $$AC$$ and $$BD$$, and erase the $$AB$$ and $$CD$$ connections.
 4. Go to Step 2.
 
-By the above observation on swapping connections, we note that the total sum of the lengths of all of the connecting line segments decreases when we execute Step 3. But there are only finitely many connection configurations, so this sum cannot decrease forever, which means our algorithm must terminate. When the algorithm has terminated, we are left with a valid connecting configuration. $$\square$$
+By our initial observation on swapping connections, we note that the sum of the lengths of all of the connecting line segments strictly decreases when we execute Step 3. But there are only finitely many connection configurations, so this sum cannot decrease forever, which means our algorithm must terminate at a local minimum eventually. When the algorithm has reached a local minimum, we are left with a valid connection configuration, since otherwise we could perform Step 3 again and further decrease the total length sum. $$\square$$
