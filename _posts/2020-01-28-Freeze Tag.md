@@ -43,7 +43,7 @@ REMARK (Useless): The multiplicity of a state $$(N_1, N_2...N_n)$$, where $$N_i$
 
 PROOF: We can pretty easily prove this: the numerator is the way to arrange $$\sum N_i$$ elements and the denominator is to account for the ways we have overcounted arrangements within the 1's, 2's, ..., n's.
 
-I thought when I discovered the above fact, I thought it would be very useful. Turns out it isn't, as most computations involving factorials quickly get out of hand. They might eventually reduce to expressions I wanted, but most of that kind of computation was not very fruitful.
+When I discovered the above fact, it seemed like it would be useful in perhaps some more explicit computations involving transition probabilities. Turns out it isn't, as most computations involving factorials quickly get out of hand. They might eventually reduce to expressions I want, but most of that kind of computation was not very fruitful.
 
 REMARK (Extremely Useful): The sum of multiplicities across all states is equal to $$2^{n-1}$$.
 
