@@ -23,7 +23,7 @@ Players $$A$$ and $$B$$ cannot communicate once the game has started. However, b
 
 ### A:
 
-Because the orientation of the board is fixed, we can index the squares on the board $$0, 1, 2, 3, ..., 63$$. Every board state can thus be encoded uniquely by a $$64$$-bit integer $$x$$, where the $$i$$th index of $$x$$ is $$1$$ if the $$i$$th square of the board state is showing heads, and $$0$$ if it is showing tails. In fact, it is easy to see that this mapping of board state to $$64$$-bit integer is bijective, since given any $$64$$-bit integer, we can generate a unique board state. Because of this bijection, I will refer to board states and their $$64$$-bit representations interchangeably.
+Because the orientation of the board is fixed, we can index the squares on the board $$0, 1, 2, 3, ..., 63$$. Every board state can thus be encoded uniquely by a $$64$$-bit integer $$x$$, where the $$n$$th index of $$x$$ is $$1$$ if the $$n$$th square of the board state is showing heads, and $$0$$ if it is showing tails. In fact, it is easy to see that this mapping of board state to $$64$$-bit integer is bijective, since given any $$64$$-bit integer, we can generate a unique board state. Because of this bijection, I will refer to board states and their $$64$$-bit representations interchangeably.
 
 We can restate the problem as follows: is there a strategy such that given any $$64$$-bit integer $$x$$ and any index $$i \in \{ 0, ..., 63 \}$$, Player $$A$$ can always flip a single bit of $$x$$ (yielding a new $$64$$-bit integer $$y$$) such that when $$B$$ sees $$y$$, he can determine the value of $$i$$?
 
@@ -35,7 +35,7 @@ The we can restate the problem as follows: do there exist functions $$I$$ and $$
 We can think of the function
 \\[ C: \\{ 0, ..., 2^{64} - 1 \\} \to \\{ 0, ..., 63 \\} \\]
 
-as a *classification function* which classifies every possible board state into one of $$64$$ categories, with each category corresponding to a unique index on the board. When player $$B$$ sees the final board state, he can use $$C$$ to calculate the classification of the final board state, which will indicate the prize index.
+as a *classification function* which classifies every possible board state into one of $$64$$ categories, with each category corresponding to a unique index on the board. When player $$B$$ sees the final board state, he can use $$C$$ to calculate the category of the final board state, which will indicate the prize index.
 
 We can think of the function
 \\[ I: \\{ 0, ..., 2^{64} - 1 \\} \times \\{ 0, ..., 63 \\} \to \\{ 0, ..., 63 \\} \\]
@@ -78,18 +78,18 @@ Recall that we defined the bitflipping function $$F(x,n)$$ as the result of flip
 Consider the expression $$C(F(x,n))$$, that is the categorization of $$x$$ after we flip its $$n$$th bit. There are two cases:
 
 Case 1: the $$n$$th bit of $$x$$ is $$1$$. In this case, $$x_n = n$$. When we flip the $$n$$ bit of $$x$$, it'll become a $$0$$, which means that
-\\[ C(F(x,n)) = x_0 \circ .... \circ x_{n-1} \circ x_{n+1} \circ ... \circ x_63 \\]
+\\[ C(F(x,n)) = x_0 \circ .... \circ x_{n-1} \circ x_{n+1} \circ ... \circ x_{63} \\]
 
 Because $$\circ$$ satisfies the properties (3) and (4) listed above, we can add in $$0 = n \circ n = x_n \circ n$$ to the RHS of the equation without changing its value. By associativity and commutativity of $$\circ$$, we are free to rearrange the terms in the chain of $$\circ$$ applications, which leaves us with
 
-\\[ C(F(x,n) = x_0 \circ .... \circ x_{n-1} \circ x_n \circ x_{n+1} \circ ... \circ x_63 \circ n \\]
+\\[ C(F(x,n) = x_0 \circ .... \circ x_{n-1} \circ x_n \circ x_{n+1} \circ ... \circ x_{63} \circ n \\]
 \\[ \implies C(F(x,n)) = C(x) \circ n \\]
 
 Case 2: the $$n$$th bit of $$x$$ is $$0$$. In this case $$x_n = 0$$. When we flip the $$n$$th bit of $$x$$, it'll become a $$1$$, which means that
 \\[ C(F(x,n)) = x_0 \circ ... \circ x_{n-1} \circ n \circ x_{n+1} \circ ... \circ x_63 \\]
 \\[ = x_0 \circ ... \circ x_{n-1} \circ x_n \circ x_{n+1} \circ ... \circ x_63 \circ n \\]
 
-Here we moved the $$n$$ term to the end, and we added in an extra $$x_n$$ since $$x_n = 0$$. We observe once again that
+Here we moved the $$n$$ term to the end, and we added in an extra $$x_n$$ (which we are allowed to do since $$x_n = 0$$). We observe once again that
 \\[ C(F(x,n)) = C(x) \circ n \\]
 
 Since this equality holds for both cases, it holds generally. 
@@ -107,6 +107,18 @@ Noting our above derivations, we have:
 
 which is exactly what we wanted. Thus we have defined two functions $$C,I$$ which yield a guaranteed winning strategy for the game!
 
+#### Intuition Behind the Properties of $$\circ$$
+
+The above four properties of $$\circ$$ may seem like they come out of nowhere, but there is a method to the madness. The intuition is as follows:
+
+We can consider the operator $$\circ$$ as a *transition function* that defines, for each pair of (starting category $$k$$, bitflip index $$n$$), the category $$k \circ n$$ of the resulting board state when we flip the $$n$$th index in a board state with category $$k$$. Of course, there are many board states that fall into category $$k$$, so for this transition function to be well-defined, we need a categorization function that satisfies the following property: if flipping the $$n$$th bit of a *particular* board state with category $$k$$ yields a board state with category $$k\prime$$, then flipping the $$n$$th bit of *any* board state with category $$k$$ *always* yields a board state with category $$k\prime$$.
+
+Furthermore, we can think of any $$64$$-bit integer $$x$$ as being generated by a sequence of bitflips applied to an initial integer, say, $$0$$. To compute the categorization of $$x$$, it would be nice if we could just start with the categorization of $$0$$ and then successively apply the transition function for each bitflip we used to generate $$x$$. But there are many sequences of bitflips that can generate $$x$$, so in order for this process to be well-defined, we need the transition function to satisfy the following property: any sequence of transition applications should yield the exact same end category if their corresponding bitflips generate the same end integer.
+
+The property of equivalence under different orderings of application is essentially associativity plus commutativity.
+
+Because flipping the same bit index twice does effectively nothing, we also need the transition function to satisfy $$b \circ a \circ a = b$$ for all $$a$$ and $$b$$, which implies that $$a \circ a$$ should equal some identity element, which we can just define to be $$0$$.
+
 #### Does $$\circ$$ Exist?
 
 It remains to show that an operator $$\circ$$ satisfying the four properties listed above actually exists.
@@ -115,7 +127,7 @@ Although group theory is definitely not a requirement for solving this problem, 
 \\[ a \circ b = 0 \\]
 where $$0$$ is the identity element of the group. 
 
-In fact this group theoretic approach was the approach that I went with when I initially solved the problem. It is possible to explicitly generate a group with the properties above. Consider the group generated by the following set of independent cyclic 2-permutations: $$ \{ (1,2), (3,4), (5,6), (7,8), (9,10), (11,12) \} $$. It is relatively simple to show that this group is commutative (since the elements in the generating set are all independent of each other), that any element of the group is its own inverse (since applying the same cyclic 2-permutation twice will yield the identity permutation), and that it has size $$64$$ (since any element in the group is uniquely determined by which cyclic 2-permutations of the generating set it contains, which means there are $$2^6 = 64$$ total elements).
+In fact, this group theoretic approach was the approach that I went with when I initially solved the problem. It is possible to explicitly construct a group with the properties above: consider the group generated by the following set of independent cyclic 2-permutations: $$ \{ (1,2), (3,4), (5,6), (7,8), (9,10), (11,12) \} $$. It is relatively simple to show that this group is commutative (since the elements in the generating set are all independent of each other), that any element of the group is its own inverse (since applying the same cyclic 2-permutation twice will yield the identity permutation), and that it has size $$64$$ (since any element in the group is uniquely determined by its composition of elements from the generating set, which means there are $$2^6 = 64$$ total elements).
 
 In this way the problem is essentially solved; however, there is an even nicer way of representing the operator $$\circ$$. We note that the $$XOR$$ operator actually satisfies all of the properties of $$\circ$$! This makes a lot sense when thinking about the group that we constructed: we can draw a one-to-one mapping between group elements and $$6$$-bit integers, where the $$n$$th index of an integer represents whether or not the group element contains the $$n$$th cyclic 2-permutation in the generating set, i.e. whether it contains $$(2n+1,2n+2)$$. Since cyclic 2-permutations cancel themselves out when composed with themselves, composing two elements of the group is equivalent to $$XOR$$ing their corresponding integer representations.
 
@@ -123,18 +135,18 @@ In this way the problem is essentially solved; however, there is an even nicer w
 
 Let's summarize our results into a full strategy for the game.
 
-We define the *classification function*
+We define the *classification* of a board state $$x$$ as:
 \\[ C(x) = x_0 ~XOR~ x_1 ~XOR~ x_2 ~XOR~ ... ~XOR~ x_{63} \\]
 
-where $$x$$ is a board state, and
+where
 
-$$x_n = n$$ if the $$n$$th square of the $$x$$ is showing heads, otherwise
+$$x_n = n$$ if the $$n$$th square of $$x$$ is showing heads, otherwise
 
 $$x_n = 0$$.
 
-At the start of the game, Player $$A$$ enters the room where he is given the index $$i$$ of the prize square, and he also observes the initial board state $$x$$. He computes $$C(x)$$, the initial categorization of the board. He then computes the board index $$k$$ that he should flip: $$k = C(x) ~XOR~ i$$. He then flips the coin on the $$k$$th index of the board, yielding an updated board state $$F(x,k)$$.
+At the start of the game, Player $$A$$ enters the room where he is given the index $$i$$ of the prize square, and he also observes the initial board state $$x$$. He computes $$C(x)$$, the initial categorization of the board. He then computes the board index $$k$$ that he should flip: $$k = C(x) ~XOR~ i$$. He flips the coin on the $$k$$th index of the board, yielding an updated board state $$F(x,k)$$, and subsequently leaves the room.
 
-Player $$B$$ enters the room can computes the categorization of the updated board state $$C(F(x,k))$$. By our analysis above, $$B$$ can be confident that
+Player $$B$$ enters the room and computes the categorization of the updated board state $$C(F(x,k))$$. By our analysis above, $$B$$ can be confident that
 \\[ C(F(x,k)) = C(x) ~XOR~ k \\]
 
 \\[ = C(x) ~XOR~ C(x) ~XOR~ i \\]
